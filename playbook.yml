@@ -1,0 +1,34 @@
+- name: adminMachineDev
+  hosts: dev
+  become: yes
+
+  roles:
+  - docker
+  - git
+
+  tasks:
+    - name: Create groups developer and administrator
+      group:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - developer
+        - administrator
+
+    - name: Add ubuntu to developer group
+      user:
+        name: ubuntu
+        group: developer
+        append: yes
+  
+    - name: No ask password for developer # Supprime la demande de mot de passe pour se sudo pour le groupe developer
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^%developer'
+        line: '%developer ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s' # validation syntaxique du fichier
+    
+    - name: Clone app git
+      git:
+        repo: https://github.com/Lilowl06/symfonydocker.git
+        dest: /home/ubuntu/symfondocker
