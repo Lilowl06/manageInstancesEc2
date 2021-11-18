@@ -4,6 +4,7 @@ import sys
 import time
 
 ec2 = boto3.resource('ec2', region_name="eu-central-1")
+user = str(sys.argv[1])
 
 # Function definition
 def nameAvailable(userName) :
@@ -26,12 +27,22 @@ def create_instance(keyName):
         MaxCount=1,
         InstanceType="t2.micro",
         SecurityGroupIds=['sg-045de45c2834b1b04'],
-        KeyName=keyName
+        KeyName=keyName,
+        TagSpecifications=[
+            {
+                'ResourceType': 'instance',
+                'Tags': [
+                    {
+                        'Key': 'Name',
+                        'Value': f'dev-{user}'
+                    }
+                ]
+            }
+        ]
     )
     return res
 
 # Apply function
-user = str(sys.argv[1])
 if not nameAvailable(user) : 
     print("User name is taken") 
     exit()
