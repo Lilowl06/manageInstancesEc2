@@ -87,14 +87,14 @@ with open('tmp.txt', 'w') as f:
 print("***** Instance EC2 added to Inventory.txt *****")
 
 with open('ConnectionId.txt', 'a') as f:
-    f.write(f"***** {user} *****\n Connection à l'instance {user} :\n La clé privé se situe dans /tmp/{user}.pem\n La commande de connection à l'instance est ssh est : -i /tmp/{user}.pem ubuntu@{instancePublicDns}\n")
+    f.write(f"***** {user} *****\n Connection à l'instance {user} :\n La clé privé se situe dans /tmp/{user}.pem\n La commande de connection à l'instance est ssh est : ssh -i /tmp/{user}.pem ubuntu@{instancePublicDns}\n")
 
 # Sleep for 
 time.sleep(30)
 
 # Automatic add fingerprint in known_hosts
 os.system(f"ssh-keyscan -H {instanceIp} >> ~/.ssh/known_hosts")
-print("***** hohst add to known_hosts *****")
+print("***** host add to known_hosts *****")
 
 # Run ansible playbook
 os.system(f'ansible-playbook -i tmp.txt ./playbook.yml --user ubuntu')
