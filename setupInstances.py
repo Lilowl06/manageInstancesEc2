@@ -59,8 +59,6 @@ instances[0].reload()
 print("***** Instance EC2 running *****")
 instanceIp=str(instances[0].public_ip_address)
 instancePublicDns=str(instances[0].public_dns_name)
-print(instances[0].id)
-print(instancePublicDns)
 
 line = f"{instanceId} ansible_host={instanceIp} ansible_port=22 ansible_ssh_private_key_file=/tmp/{user}.pem\n"
 with open('inventory.txt', 'a') as f:
@@ -72,14 +70,14 @@ print("***** Instance EC2 added to Inventory.txt *****")
 with open('ConnectionId.txt', 'a') as f:
     f.write(f"***** {user} *****\n Connection à l'instance {user} :\n La clé privé se situe dans /tmp/{user}.pem\n La commande de connection à l'instance est ssh est : -i /tmp/{user}.pem ubuntu@{instancePublicDns}\n")
 
-# # Sleep for 
-# time.sleep(30)
+# Sleep for 
+time.sleep(30)
 
-# # Automatic add fingerprint in known_hosts
-# os.system(f"ssh-keyscan -H {instanceIp} >> ~/.ssh/known_hosts")
-# print("***** hohst add to known_hosts *****")
+# Automatic add fingerprint in known_hosts
+os.system(f"ssh-keyscan -H {instanceIp} >> ~/.ssh/known_hosts")
+print("***** hohst add to known_hosts *****")
 
-# # Run ansible playbook
-# os.system(f'ansible-playbook -i tmp.txt ./playbook.yml --user ubuntu')
+# Run ansible playbook
+os.system(f'ansible-playbook -i tmp.txt ./playbook.yml --user ubuntu')
 
 
