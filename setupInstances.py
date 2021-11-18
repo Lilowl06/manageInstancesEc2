@@ -5,6 +5,7 @@ import time
 
 ec2 = boto3.resource('ec2', region_name="eu-central-1")
 user = str(sys.argv[1])
+SecurityGroupIds='sg-045de45c2834b1b04' # A changer en fonction de l'utilisateur du script
 
 # Function definition
 def nameAvailable(userName) :
@@ -26,7 +27,7 @@ def create_instance(keyName):
         MinCount=1,
         MaxCount=1,
         InstanceType="t2.micro",
-        SecurityGroupIds=['sg-045de45c2834b1b04'],
+        SecurityGroupIds=[SecurityGroupIds],
         KeyName=keyName,
         TagSpecifications=[
             {
