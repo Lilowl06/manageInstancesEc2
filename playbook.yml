@@ -5,6 +5,7 @@
   roles:
   - docker
   - git
+  - mysql
 
   tasks:
     - name: Create groups developer and administrator
@@ -32,3 +33,4 @@
       git:
         repo: https://github.com/Lilowl06/symfonydocker.git
         dest: /home/ubuntu/symfondocker
+        version: main

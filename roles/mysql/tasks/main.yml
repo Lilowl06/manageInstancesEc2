@@ -1,0 +1,9 @@
+- name: Install MySQL
+  action: apt install {{ item }}
+  loop:
+  - mysql-server-core-8.0
+  - mysql-client-core-8.0
+  - libmysqlclient-dev
+  - python-mysqldb
+  - mysql-server
+  - mysql-client
